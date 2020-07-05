@@ -10,6 +10,7 @@
     <script type="text/javascript" src="assets/bootstrap.min.js"></script>
     <script type="text/javascript" src="assets/select2.min.js"></script>
     <script type="text/javascript" src="assets/bootstrap-toggle.min.js"></script>
+    <script type="text/javascript" src="data.js"></script>
 
     <style type="text/css">
       * { padding: 0; margin: 0; }
@@ -441,18 +442,8 @@
           var roamData;
           var roamSource;
           function reload() {
-              $.get(`/roam-data?force=1&token=${token}`, function(data, status){
-                  console.log(`Connection to /roam-data: ${status}`);
-                  roamData = JSON.parse(data.substring(data.indexOf(':') + 1));
-                  update();
-
-                  roamSource = new EventSource(`/roam-data?token=${token}`);
-                  roamSource.onmessage = function (event) {
-                      var parsed_data = JSON.parse(event.data);
-                      roamData = parsed_data;
-                      update();
-                  }
-              });
+              roamData = data;
+              update();
           }
           reload();
 
